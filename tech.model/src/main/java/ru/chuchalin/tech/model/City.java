@@ -1,6 +1,6 @@
 package ru.chuchalin.tech.model;
 
-import static ru.chuchalin.tech.model.TransformData.transformTimestamp;
+import static ru.chuchalin.tech.model.TransformData.transformDate;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -8,90 +8,27 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class EventAddress {
-	protected Integer eventAddressID;
-	protected String place;
-	protected City city;
-	protected String street;
-	protected String house;
-	protected String building;
-	protected String construction;
-	protected String fullAddress;
-	protected String gps;
+public class City {
+	protected Integer cityID;
+	protected String name;
+	public Integer getCityID() {
+		return cityID;
+	}
+
+	public void setCityID(Integer cityID) {
+		this.cityID = cityID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	protected boolean fake;
-
-	public Integer getEventAddressID() {
-		return eventAddressID;
-	}
-
-	public void setEventAddressID(Integer eventAddressID) {
-		this.eventAddressID = eventAddressID;
-	}
-
-	public String getPlace() {
-		return place;
-	}
-
-	public void setPlace(String place) {
-		this.place = place;
-	}
-
-	public City getCity() {
-		return city;
-	}
-
-	public void setCity(City city) {
-		this.city = city;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getHouse() {
-		return house;
-	}
-
-	public void setHouse(String house) {
-		this.house = house;
-	}
-
-	public String getBuilding() {
-		return building;
-	}
-
-	public void setBuilding(String building) {
-		this.building = building;
-	}
-
-	public String getConstruction() {
-		return construction;
-	}
-
-	public void setConstruction(String construction) {
-		this.construction = construction;
-	}
-
-	public String getFullAddress() {
-		return fullAddress;
-	}
-
-	public void setFullAddress(String fullAddress) {
-		this.fullAddress = fullAddress;
-	}
-
-	public String getGps() {
-		return gps;
-	}
-
-	public void setGps(String gps) {
-		this.gps = gps;
-	}
-
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder("{");
 		try {
@@ -109,7 +46,7 @@ public class EventAddress {
 						if (hasFirstProperty)
 							sb.append(",");
 						sb.append("\"").append(fields[i].getName()).append("\"").append(": \"")
-								.append(transformTimestamp((Date) fields[i].get(this)).toString()).append("\"");
+								.append(transformDate((Date) fields[i].get(this)).toString()).append("\"");
 						hasFirstProperty = true;
 					} else if (fields[i].getType().equals(Set.class) || fields[i].getType().equals(List.class)) {
 						if (((Collection) fields[i].get(this)).size() > 0) {
@@ -133,4 +70,5 @@ public class EventAddress {
 		}
 		return sb.append("}").toString();
 	}
+
 }

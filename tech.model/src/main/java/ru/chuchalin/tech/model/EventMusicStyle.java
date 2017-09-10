@@ -9,6 +9,15 @@ import java.util.List;
 import java.util.Set;
 
 public class EventMusicStyle {
+	protected Integer styleID;
+	public Integer getStyleID() {
+		return styleID;
+	}
+
+	public void setStyleID(Integer styleID) {
+		this.styleID = styleID;
+	}
+
 	protected String style;
 	protected boolean fake;
 

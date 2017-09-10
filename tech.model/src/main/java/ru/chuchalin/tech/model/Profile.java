@@ -1,6 +1,6 @@
 package ru.chuchalin.tech.model;
 
-import static ru.chuchalin.tech.model.TransformData.transformTimestamp;
+import static ru.chuchalin.tech.model.TransformData.transformDate;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -8,90 +8,65 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class EventAddress {
-	protected Integer eventAddressID;
-	protected String place;
+public class Profile {
+	protected Integer profileID;
+	protected String firstName;
+	protected String lastName;
+	protected String username;
+	protected String nickname;
 	protected City city;
-	protected String street;
-	protected String house;
-	protected String building;
-	protected String construction;
-	protected String fullAddress;
-	protected String gps;
+	protected Integer age;
+	protected Date birthDate;
+	protected String email;
 	protected boolean fake;
-
-	public Integer getEventAddressID() {
-		return eventAddressID;
+	public String getFirstName() {
+		return firstName;
 	}
-
-	public void setEventAddressID(Integer eventAddressID) {
-		this.eventAddressID = eventAddressID;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-
-	public String getPlace() {
-		return place;
+	public String getLastName() {
+		return lastName;
 	}
-
-	public void setPlace(String place) {
-		this.place = place;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
-
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	public City getCity() {
 		return city;
 	}
-
 	public void setCity(City city) {
 		this.city = city;
 	}
-
-	public String getStreet() {
-		return street;
+	public Integer getAge() {
+		return age;
 	}
-
-	public void setStreet(String street) {
-		this.street = street;
+	public void setAge(Integer age) {
+		this.age = age;
 	}
-
-	public String getHouse() {
-		return house;
+	public Date getBirthDate() {
+		return birthDate;
 	}
-
-	public void setHouse(String house) {
-		this.house = house;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
-
-	public String getBuilding() {
-		return building;
+	public String getEmail() {
+		return email;
 	}
-
-	public void setBuilding(String building) {
-		this.building = building;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-	public String getConstruction() {
-		return construction;
-	}
-
-	public void setConstruction(String construction) {
-		this.construction = construction;
-	}
-
-	public String getFullAddress() {
-		return fullAddress;
-	}
-
-	public void setFullAddress(String fullAddress) {
-		this.fullAddress = fullAddress;
-	}
-
-	public String getGps() {
-		return gps;
-	}
-
-	public void setGps(String gps) {
-		this.gps = gps;
-	}
-
 	public String toString() {
 		StringBuilder sb = new StringBuilder("{");
 		try {
@@ -109,7 +84,7 @@ public class EventAddress {
 						if (hasFirstProperty)
 							sb.append(",");
 						sb.append("\"").append(fields[i].getName()).append("\"").append(": \"")
-								.append(transformTimestamp((Date) fields[i].get(this)).toString()).append("\"");
+								.append(transformDate((Date) fields[i].get(this)).toString()).append("\"");
 						hasFirstProperty = true;
 					} else if (fields[i].getType().equals(Set.class) || fields[i].getType().equals(List.class)) {
 						if (((Collection) fields[i].get(this)).size() > 0) {
