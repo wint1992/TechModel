@@ -6,8 +6,8 @@ import org.hibernate.cfg.Configuration;
 public class HibernateUtil {
 	private SessionFactory sessionFactory;
 
-	public boolean init(String url, String login, String pass) {
-		boolean vResult = true;
+	public HibernateUtil init(String url, String login, String pass) {
+		HibernateUtil vResult = null;
 		try {
 			sessionFactory = new Configuration()//
 					.setProperties(System.getProperties())
@@ -28,8 +28,9 @@ public class HibernateUtil {
 					.addClass(ru.chuchalin.tech.model.Profile.class)//
 					.addClass(ru.chuchalin.tech.model.Event.class)//
 					.buildSessionFactory();
+			vResult = this;
 		} catch (Throwable e) {
-			vResult = false;
+			vResult = null;
 		}
 		return vResult;
 	}
