@@ -5,43 +5,28 @@ import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 import static graphql.schema.GraphQLList.list;
 import static graphql.schema.GraphQLObjectType.newObject;
 
-import java.util.Date;
-
 import com.google.gson.Gson;
 
 import graphql.ExecutionInput;
 import graphql.GraphQL;
 import graphql.Scalars;
-import graphql.schema.DataFetcher;
-import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLSchema;
-import ru.chuchalin.tech.model.City;
-import ru.chuchalin.tech.model.Event;
-import ru.chuchalin.tech.model.EventAddress;
-
 public class GraphQLSchemaModel {
-	private static DataFetcher<Event> eventFetcher = new DataFetcher<Event>() {
-		@Override
-		public Event get(DataFetchingEnvironment environment) {
-			Event ev = new Event();
-			City ct = new City();
-			ct.setName("Москва");
-			ct.setCityID(1);
-			EventAddress addr = new EventAddress();
-			addr.setCity(ct);
-			ev.setEventID(1);
-			ev.setBeginDateTime(new Date());
-			ev.setEventAddress(addr);
-			System.out.println(ev);
-			return ev;
-		}
-
-	};
-
 	private static GraphQLObjectType CityType = newObject().name("City")
 			.field(newFieldDefinition().name("cityID").type(Scalars.GraphQLInt))
 			.field(newFieldDefinition().name("name").type(Scalars.GraphQLString)).build();
+	
+	private static GraphQLObjectType ProfileType = newObject().name("Profile")
+			.field(newFieldDefinition().name("profileID").type(Scalars.GraphQLInt))
+			.field(newFieldDefinition().name("firstName").type(Scalars.GraphQLString))
+			.field(newFieldDefinition().name("lastName").type(Scalars.GraphQLString))
+			.field(newFieldDefinition().name("username").type(Scalars.GraphQLString))
+			.field(newFieldDefinition().name("nickname").type(Scalars.GraphQLString))
+			.field(newFieldDefinition().name("city").type(CityType))
+			.field(newFieldDefinition().name("age").type(Scalars.GraphQLInt))
+			.field(newFieldDefinition().name("birthDate").type(Scalars.GraphQLString))
+			.field(newFieldDefinition().name("email").type(Scalars.GraphQLString)).build();
 
 	private static GraphQLObjectType EventMusicStyleType = newObject().name("EventMusicStyle")
 			.field(newFieldDefinition().name("styleID").type(Scalars.GraphQLInt))
@@ -73,10 +58,16 @@ public class GraphQLSchemaModel {
 			.field(newFieldDefinition().name("eventMusicStyles").type(list(EventMusicStyleType))).build();
 
 	private static GraphQLObjectType queryType = newObject().name("QueryType")
-			.field(newFieldDefinition().name("event").type(EventType)
-					.argument(newArgument().name("id").type(Scalars.GraphQLInt)).dataFetcher(eventFetcher))
-			.field(newFieldDefinition().name("profile").type(EventType)
-					.argument(newArgument().name("id").type(Scalars.GraphQLInt)))
+			.field(newFieldDefinition().name("event").type(list(EventType))
+					.argument(newArgument().name("id").type(Scalars.GraphQLInt)).dataFetcher(GraphQLSchemaDataFetch.eventFetcher))
+			.field(newFieldDefinition().name("profile").type(list(ProfileType))
+					.argument(newArgument().name("id").type(Scalars.GraphQLInt)).dataFetcher(GraphQLSchemaDataFetch.profileFetcher))
+			.field(newFieldDefinition().name("city").type(list(CityType))
+					.argument(newArgument().name("id").type(Scalars.GraphQLInt)).dataFetcher(GraphQLSchemaDataFetch.cityFetcher))
+			.field(newFieldDefinition().name("musicStyle").type(list(EventMusicStyleType))
+					.argument(newArgument().name("id").type(Scalars.GraphQLInt)).dataFetcher(GraphQLSchemaDataFetch.musicStyleFetcher))
+			.field(newFieldDefinition().name("eventAddress").type(list(EventAddressType))
+					.argument(newArgument().name("id").type(Scalars.GraphQLInt)).dataFetcher(GraphQLSchemaDataFetch.eventAddressFetcher))
 			.build();
 
 	private static GraphQLSchema modelSchema = GraphQLSchema.newSchema().query(queryType).build();
