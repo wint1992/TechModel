@@ -1,12 +1,15 @@
 package ru.chuchalin.tech.model;
 
 import static ru.chuchalin.tech.model.TransformData.transformDate;
+import static ru.chuchalin.tech.model.TransformData.transformTimestamp;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 
 public class Profile {
 	protected Integer profileID;
@@ -19,54 +22,79 @@ public class Profile {
 	protected Date birthDate;
 	protected String email;
 	protected boolean fake;
+
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getNickname() {
 		return nickname;
 	}
+
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
 	public City getCity() {
 		return city;
 	}
+
 	public void setCity(City city) {
 		this.city = city;
 	}
+
 	public Integer getAge() {
 		return age;
 	}
+
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-	public Date getBirthDate() {
+
+	public String getBirthDate() {
+		XMLGregorianCalendar _birthDate = transformTimestamp(birthDate);
+		if (_birthDate != null)
+			return _birthDate.toString();
+		else
+			return null;
+	}
+
+	public Date getBirthDateAsDate() {
 		return birthDate;
 	}
+
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder("{");
 		try {

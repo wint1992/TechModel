@@ -10,6 +10,9 @@ import java.util.Set;
 
 public class EventMusicStyle {
 	protected Integer styleID;
+	protected String style;
+	protected boolean fake;
+
 	public Integer getStyleID() {
 		return styleID;
 	}
@@ -17,9 +20,6 @@ public class EventMusicStyle {
 	public void setStyleID(Integer styleID) {
 		this.styleID = styleID;
 	}
-
-	protected String style;
-	protected boolean fake;
 
 	public String getStyle() {
 		return style;

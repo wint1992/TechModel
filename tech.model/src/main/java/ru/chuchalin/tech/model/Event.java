@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
 public class Event {
 	protected Integer eventID;
 	protected String eventName;
@@ -22,84 +24,124 @@ public class Event {
 	protected String backgroundPhoto;
 	protected BigDecimal cost;
 	protected Integer priority;
-	
+
 	protected Set<EventMusicStyle> eventMusicStyles;
 	protected boolean fake;
+
 	public Integer getEventID() {
 		return eventID;
 	}
+
 	public void setEventID(Integer eventID) {
 		this.eventID = eventID;
 	}
+
 	public String getEventName() {
 		return eventName;
 	}
+
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
+
 	public EventAddress getEventAddress() {
 		return eventAddress;
 	}
+
 	public void setEventAddress(EventAddress eventAddress) {
 		this.eventAddress = eventAddress;
 	}
-	public Date getBeginDateTime() {
+
+	public String getBeginDateTime() {
+		XMLGregorianCalendar _beginDateTime = transformTimestamp(beginDateTime);
+		if (_beginDateTime != null)
+			return _beginDateTime.toString();
+		else
+			return null;
+	}
+
+	public Date getBeginDateTimeAsDate() {
 		return beginDateTime;
 	}
+
 	public void setBeginDateTime(Date beginDateTime) {
 		this.beginDateTime = beginDateTime;
 	}
-	public Date getEndDateTime() {
+
+	public String getEndDateTime() {
+		XMLGregorianCalendar _endDateTime = transformTimestamp(endDateTime);
+		if (_endDateTime != null)
+			return _endDateTime.toString();
+		else
+			return null;
+	}
+
+	public Date getEndDateTimeAsDate() {
 		return endDateTime;
 	}
+
 	public void setEndDateTime(Date endDateTime) {
 		this.endDateTime = endDateTime;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public String getComment() {
 		return comment;
 	}
+
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+
 	public String getUri() {
 		return uri;
 	}
+
 	public void setUri(String uri) {
 		this.uri = uri;
 	}
+
 	public String getBackgroundPhoto() {
 		return backgroundPhoto;
 	}
+
 	public void setBackgroundPhoto(String backgroundPhoto) {
 		this.backgroundPhoto = backgroundPhoto;
 	}
+
 	public BigDecimal getCost() {
 		return cost;
 	}
+
 	public void setCost(BigDecimal cost) {
 		this.cost = cost;
 	}
+
 	public Integer getPriority() {
 		return priority;
 	}
+
 	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
+
 	public Set<EventMusicStyle> getEventMusicStyles() {
 		if (eventMusicStyles == null)
 			eventMusicStyles = new HashSet<>();
 		return eventMusicStyles;
 	}
+
 	public void setEventMusicStyles(Set<EventMusicStyle> eventMusicStyles) {
 		this.eventMusicStyles = eventMusicStyles;
 	}
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder("{");
 		try {

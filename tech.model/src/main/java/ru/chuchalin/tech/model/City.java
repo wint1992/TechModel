@@ -11,6 +11,8 @@ import java.util.Set;
 public class City {
 	protected Integer cityID;
 	protected String name;
+	protected boolean fake;
+
 	public Integer getCityID() {
 		return cityID;
 	}
@@ -27,8 +29,6 @@ public class City {
 		this.name = name;
 	}
 
-	protected boolean fake;
-	
 	public String toString() {
 		StringBuilder sb = new StringBuilder("{");
 		try {
