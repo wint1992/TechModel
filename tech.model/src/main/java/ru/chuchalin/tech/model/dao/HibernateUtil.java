@@ -29,7 +29,8 @@ public class HibernateUtil {
 					.addClass(ru.chuchalin.tech.model.Event.class)//
 					.buildSessionFactory();
 			vResult = this;
-		} catch (Throwable e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			vResult = null;
 		}
 		return vResult;

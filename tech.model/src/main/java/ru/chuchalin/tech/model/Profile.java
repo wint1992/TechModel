@@ -23,6 +23,14 @@ public class Profile {
 	protected String email;
 	protected boolean fake;
 
+	public Integer getProfileID() {
+		return profileID;
+	}
+
+	public void setProfileID(Integer profileID) {
+		this.profileID = profileID;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}

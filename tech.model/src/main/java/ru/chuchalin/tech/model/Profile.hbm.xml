@@ -1,6 +1,6 @@
 <hibernate-mapping package="ru.chuchalin.tech.model">
 	<class name="Profile" table="oltp.profile">
-		<id name="profileID" column="ID" type="java.lang.Integer">
+		<id name="profileID" column="id" type="java.lang.Integer">
 			<generator class="increment" />
 		</id>
 		<property name="firstName" column="first_name" type="java.lang.String" />

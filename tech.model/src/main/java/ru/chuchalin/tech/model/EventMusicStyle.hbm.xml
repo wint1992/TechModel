@@ -1,6 +1,6 @@
 <hibernate-mapping package="ru.chuchalin.tech.model">
 	<class name="EventMusicStyle" table="oltp.dict_music_style">
-		<id name="styleID" column="ID" type="java.lang.Integer">
+		<id name="styleID" column="id" type="java.lang.Integer">
 			<generator class="increment" />
 		</id>
 		<property name="style" column="value" type="java.lang.String" />
