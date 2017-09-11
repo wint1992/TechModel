@@ -24,11 +24,11 @@
     	<artifactId>hibernate-core</artifactId>
     	<version>5.2.10.Final</version>
 	</dependency>
-	<dependency>
+<!-- 	<dependency>
 	    <groupId>org.hibernate</groupId>
 	    <artifactId>hibernate-c3p0</artifactId>
 	    <version>5.2.10.Final</version>
-	</dependency>
+	</dependency> -->
 	<dependency>
 	    <groupId>org.postgresql</groupId>
 	    <artifactId>postgresql</artifactId>
@@ -42,15 +42,50 @@
   </dependencies>
   
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
-    </plugins>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>            
+          	<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-dependency-plugin</artifactId>
+			    <executions>
+			        <execution>
+			            <phase>install</phase>
+			            <goals>
+			                <goal>copy-dependencies</goal>
+			            </goals>
+			            <configuration>
+			                <outputDirectory>${project.build.directory}/classes/lib</outputDirectory>
+			                <overWriteReleases>false</overWriteReleases>
+			                <overWriteSnapshots>false</overWriteSnapshots>
+			                <overWriteIfNewer>true</overWriteIfNewer>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+              <archive>
+                <manifest>
+                  <mainClass>ru.chuchalin.servlet.App</mainClass>
+                    <addClasspath>true</addClasspath>
+                    <classpathPrefix>lib/</classpathPrefix>
+                </manifest>
+                <manifestEntries>
+                     <!-- <Class-Path>lib/model-1</Class-Path> -->
+                </manifestEntries>
+              </archive>
+            </configuration>
+        </plugin>
+       </plugins>
   </build>
 </project>

@@ -14,13 +14,13 @@ import ru.chuchalin.tech.model.Event;
 import ru.chuchalin.tech.model.EventAddress;
 
 public class GraphQLSchemaDataFetch {
-	private static final HibernateUtil dataSession;
-	static {
-		dataSession = new HibernateUtil().init("jdbc:postgresql://194.87.214.229/TechCalDB", "a.chuchalin",
-				"Achprocedure1@99.2");
+	private HibernateUtil dataSession;
+	
+	public GraphQLSchemaDataFetch(HibernateUtil _dataSession){		
+		dataSession = _dataSession;
 	}
 
-	public static DataFetcher eventFetcher = new DataFetcher() {
+	public DataFetcher eventFetcher = new DataFetcher() {
 		@Override
 		public Object get(DataFetchingEnvironment environment) {
 			List resultList = new ArrayList();
@@ -45,7 +45,7 @@ public class GraphQLSchemaDataFetch {
 		}
 	};
 
-	public static DataFetcher profileFetcher = new DataFetcher() {
+	public DataFetcher profileFetcher = new DataFetcher() {
 		@Override
 		public Object get(DataFetchingEnvironment environment) {
 			List resultList = new ArrayList();
@@ -53,18 +53,20 @@ public class GraphQLSchemaDataFetch {
 		}
 	};
 
-	public static DataFetcher cityFetcher = new DataFetcher() {
+	public DataFetcher cityFetcher = new DataFetcher() {
 		@Override
-		public Object get(DataFetchingEnvironment environment) {
+		public Object get(DataFetchingEnvironment environment) {			
 			List resultList = new ArrayList();
-			if (dataSession != null) {
+			if (dataSession != null && dataSession.getSessionFactory() != null) {
 				Session sf = null;
 				try {
 					sf = dataSession.getSessionFactory().openSession();
-					resultList = sf.createQuery("from City") // sf.createQuery("from
-																// City where ID
-																// = " + cityID)
+					if (sf != null) {
+						if (!environment.containsArgument("id")) resultList = sf.createQuery("from City")
 							.setHint(QueryHints.HINT_FETCH_SIZE, 10).list();
+						else resultList = sf.createQuery("from City where ID = " + environment.getArgument("id"))
+								.setHint(QueryHints.HINT_FETCH_SIZE, 10).list();
+					}
 				} catch (Exception e) {
 				} finally {
 					if (sf != null && sf.isOpen()) {
@@ -77,7 +79,7 @@ public class GraphQLSchemaDataFetch {
 		}
 	};
 
-	public static DataFetcher musicStyleFetcher = new DataFetcher() {
+	public DataFetcher musicStyleFetcher = new DataFetcher() {
 		@Override
 		public Object get(DataFetchingEnvironment environment) {
 			List resultList = new ArrayList();
@@ -85,7 +87,7 @@ public class GraphQLSchemaDataFetch {
 		}
 	};
 
-	public static DataFetcher eventAddressFetcher = new DataFetcher() {
+	public DataFetcher eventAddressFetcher = new DataFetcher() {
 		@Override
 		public Object get(DataFetchingEnvironment environment) {
 			List resultList = new ArrayList();
